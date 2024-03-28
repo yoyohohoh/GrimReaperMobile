@@ -32,7 +32,6 @@ public class DraggableController : MonoBehaviour, IPointerDownHandler, IDragHand
     public void OnPointerUp(PointerEventData eventData)
     {
         _canvasGroup.blocksRaycasts = true;
-        Debug.Log("Dropped at: " + eventData.position);
         SoundController.instance.Play("Consume");    
         GamePlayUIController.Instance.UpdateHealth(1.0f);
         GetComponent<Image>().sprite = null;

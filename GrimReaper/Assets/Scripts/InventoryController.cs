@@ -33,10 +33,10 @@ public class InventoryController : MonoBehaviour
 
     void Start()
     {
-        dataKeeper = DataKeeper.Instance;
-        bananaCount = dataKeeper.bananaAmount;
-        watermelonCount = dataKeeper.watermelonAmount;
-        cherryCount = dataKeeper.cherryAmount;
+        //dataKeeper = DataKeeper.Instance;
+        //bananaCount = dataKeeper.bananaAmount;
+        //watermelonCount = dataKeeper.watermelonAmount;
+        //cherryCount = dataKeeper.cherryAmount;
     }
     void Update()
     {

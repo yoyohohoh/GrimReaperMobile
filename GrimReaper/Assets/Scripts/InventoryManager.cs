@@ -38,7 +38,6 @@ public class InventoryManager : MonoBehaviour
 
     public void PickUpItems(string item)
     {
-        Debug.Log("Picked up item: " + inventoryCount);
         
         switch (item)
         {
@@ -70,7 +69,6 @@ public class InventoryManager : MonoBehaviour
         
         for (int i = 0; i < inventoryItems.Length; i++)
         {
-            Debug.Log("Showing items in inventory: " + i + inventoryItems[i]);
             if (inventoryItems[i] == 'B')
             {
                 string location = (i+1).ToString();

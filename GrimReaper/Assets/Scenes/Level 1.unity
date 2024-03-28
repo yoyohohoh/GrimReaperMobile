@@ -712,7 +712,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7791556365179472983, guid: 41133528ed8563f46a0d1d3d0eb3a7e3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -9.999664
+      value: -9.999756
       objectReference: {fileID: 0}
     - target: {fileID: 7791556365179472983, guid: 41133528ed8563f46a0d1d3d0eb3a7e3, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2706,10 +2706,6 @@ MonoBehaviour:
   musicVolume: 1
   soundVolume: 0
   isOgKey: 1
-  bananaAmount: 0
-  watermelonAmount: 0
-  cherryAmount: 0
-  lifeAmount: 0
   save1: {x: 0, y: 0, z: 0}
   save2: {x: 0, y: 0, z: 0}
   save3: {x: 0, y: 0, z: 0}

@@ -9,7 +9,7 @@ public class PickedUpItem : MonoBehaviour
     public int cherry;
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             SoundController.instance.Play("Item");
             ////if the game object name is banana

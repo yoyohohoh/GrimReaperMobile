@@ -19,10 +19,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    GrimReaper_LossofMemories _inputs;
+    //GrimReaper_LossofMemories _inputs;
     Vector2 _move;
-    bool isFacingRight = true;
-    bool isOgKey;
+    //bool isFacingRight = true;
+    //bool isOgKey;
     public bool isjumped;
     public bool isAttacking;
 
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool _isGrounded;
 
     [Header("Bounce Detection")]
-    [SerializeField] public string bounceTag = "BounceObject"; 
+    public string bounceTag = "BounceObject"; 
 
     [Header("Shooting")]
     [SerializeField] GameObject playerSight;
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float _projectileForce = 0f;
 
-    [SerializeField] private float _lastHorizontalInput = 1.0f;
+    //[SerializeField] private float _lastHorizontalInput = 1.0f;
 
 
     void Awake()
@@ -95,7 +95,8 @@ public class PlayerController : MonoBehaviour
         }
 
         // Create movement vector, keeping Z component as 0
-        Vector3 movement = new Vector3(_move.x, 0.0f, 0.0f) * _speed * Time.fixedDeltaTime;
+        //Vector3 movement = new Vector3(_move.x, 0.0f, 0.0f) * _speed * Time.fixedDeltaTime;
+        Vector3 movement = new Vector3(_move.x * _speed * Time.fixedDeltaTime, 0.0f, 0.0f);
         _controller.Move(movement);
         _velocity.y += _gravity * Time.fixedDeltaTime;
 
@@ -111,7 +112,7 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         if (horizontalInput != 0)
         {
-            _lastHorizontalInput = horizontalInput;
+            //_lastHorizontalInput = horizontalInput;
         }
     }
 
@@ -130,7 +131,6 @@ public class PlayerController : MonoBehaviour
     }
     public void Jump() // method will be called from clicking jump button
     {
-        Debug.Log("Jump");
         if (_isGrounded)
         {
             isjumped = true;
@@ -141,7 +141,6 @@ public class PlayerController : MonoBehaviour
 
     public void Shoot() // method will be called from clicking shoot button
     {
-        Debug.Log("Shoot");
         SoundController.instance.Play("Attack");
         isAttacking = true;
 
@@ -159,12 +158,12 @@ public class PlayerController : MonoBehaviour
 
         if (_move.x >= 0)
         {
-            Debug.Log("Player Sight: " + playerSight.transform.position.x);
+            //Debug.Log("Player Sight: " + playerSight.transform.position.x);
             projectile.gameObject.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * _projectileForce, ForceMode.Impulse);
         }
         else if (_move.x < 0)
         {
-            Debug.Log("Player Sight: " + playerSight.transform.position.x);
+            //Debug.Log("Player Sight: " + playerSight.transform.position.x);
             projectile.gameObject.GetComponent<Rigidbody>().AddForce(-projectile.transform.forward * _projectileForce, ForceMode.Impulse);
         }
 
@@ -175,15 +174,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void SendMessage(InputAction.CallbackContext context)
-    {
-        Debug.Log($"Move Performed x = {context.ReadValue<Vector2>().x}, y = {context.ReadValue<Vector2>().y}");
-    }
+    //private void SendMessage(InputAction.CallbackContext context)
+    //{
+    //    Debug.Log($"Move Performed x = {context.ReadValue<Vector2>().x}, y = {context.ReadValue<Vector2>().y}");
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Player touch" + other.name);
-        if (other.gameObject.tag == "Enemy")
+        Debug.Log("Player touch " + other.name);
+        if (other.gameObject.CompareTag("Enemy"))
         {
             //when player touch enemy, player's health will decrease
             Debug.Log("Player hit by enemy");
