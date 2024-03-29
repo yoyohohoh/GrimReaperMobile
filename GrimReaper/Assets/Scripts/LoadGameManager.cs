@@ -83,16 +83,27 @@ public class LoadGameManager : MonoBehaviour
     public void LoadGame()
     {
         Debug.Log("Load Game");
-        var playerData = SaveGameManager.Instance().LoadGame();
-        //level
-        //int level = int.Parse(playerData.level);
-        //Debug.Log("LoadGame" + level);
-        //UnityEngine.SceneManagement.SceneManager.LoadScene(level);
+        var playerData = SaveGameManager.Instance().LoadGame();        
 
         //position
         Vector3 position = JsonUtility.FromJson<Vector3>(playerData.position);
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = position;
+
+        //life
+        int life = int.Parse(playerData.life);
+
+        //inventory
+        int banana = int.Parse(playerData.inventoryBanana);
+        int watermelon = int.Parse(playerData.inventoryWatermelon);
+        int cherry = int.Parse(playerData.inventoryCherry);
+        Debug.Log("Load Game: " + banana);
+
+        //key
+        bool hasKey = bool.Parse(playerData.hasKey);
+
+        Debug.Log("Load Game: " + hasKey);
+
     }
 
 }
