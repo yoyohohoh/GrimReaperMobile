@@ -33,10 +33,10 @@ public class InventoryController : MonoBehaviour
 
     void Start()
     {
-        dataKeeper = DataKeeper.Instance;
-        bananaCount = dataKeeper.bananaAmount;
-        watermelonCount = dataKeeper.watermelonAmount;
-        cherryCount = dataKeeper.cherryAmount;
+        //dataKeeper = DataKeeper.Instance;
+        //bananaCount = dataKeeper.bananaAmount;
+        //watermelonCount = dataKeeper.watermelonAmount;
+        //cherryCount = dataKeeper.cherryAmount;
     }
     void Update()
     {
@@ -78,13 +78,13 @@ public class InventoryController : MonoBehaviour
 
     public void useBanana()
     {
-        if (bananaCount > 0)
-        {
+        //if (bananaCount > 0)
+        //{
             SoundController.instance.Play("Click");
             Debug.Log("Banana used");
             bananaCount--;
             GamePlayUIController.Instance.UpdateHealth(1.0f);
-        }
+        //}
     }
     public void useWatermelon()
     {

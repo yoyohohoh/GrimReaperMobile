@@ -62,7 +62,7 @@ public class LoadGameManager : MonoBehaviour
         //    case 1:
                 save1.interactable = true;
                 save1.GetComponentInChildren<Text>().text = timeStamp;
-                GamePlayUIController.Instance.getDataAndSave();
+                GamePlayUIController.Instance.GetDataAndSave();
         //        break;
         //    default:
         //        break;

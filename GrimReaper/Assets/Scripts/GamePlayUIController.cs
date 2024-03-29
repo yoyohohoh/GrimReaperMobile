@@ -18,6 +18,9 @@ public class GamePlayUIController : MonoBehaviour
     [SerializeField] GameObject inventory;
     [SerializeField] GameObject minimap;
 
+    [SerializeField] GameObject Key;
+    [SerializeField] GameObject noKey;
+
     private void Awake()
     {
         if (Instance != null)
@@ -34,14 +37,24 @@ public class GamePlayUIController : MonoBehaviour
     {
         pauseMsg.SetActive(false);
         saveMsg.SetActive(false);
-        inventory.SetActive(false);
+        //inventory.SetActive(false);
         minimap.SetActive(false);
         Debug.Log(Application.persistentDataPath + "/MySaveData.txt");
     }
 
     private void Update()
     {
-
+        //if tag "key" is found, show key icon
+        if (GameObject.FindGameObjectWithTag("Key"))
+        {
+            Key.SetActive(false);
+            noKey.SetActive(true);
+        }
+        else
+        {
+            Key.SetActive(true);
+            noKey.SetActive(false);
+        }
     }
 
     public void PauseGame()
@@ -68,25 +81,48 @@ public class GamePlayUIController : MonoBehaviour
     public void SaveGame()
     {
         SoundController.instance.Play("Click");
-        getDataAndSave();
+        GetDataAndSave();
         saveMsg.SetActive(true);
         saveMsg.SetActive(true);
         saveBtn.interactable = false;
         saveBtn.interactable = true;
         Invoke("CloseSaveMsg", 1);
+
     }
 
-    public void getDataAndSave()
+    public void GetDataAndSave()
     {  
         int level = SceneManager.GetActiveScene().buildIndex;
         Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        int life = DataKeeper.Instance.lifeAmount;
-        int banana = DataKeeper.Instance.bananaAmount;
-        int watermelon = DataKeeper.Instance.watermelonAmount;
-        int cherry = DataKeeper.Instance.cherryAmount;
+        //count how many object with tag "Life"
+        int life = GameObject.FindGameObjectsWithTag("Life").Length;
+
+        int banana = 0;
+        int watermelon = 0;
+        int cherry = 0;
+        for (int i = 0; i < InventoryManager.Instance.inventoryItems.Length; i++)
+        {
+            if (InventoryManager.Instance.inventoryItems[i] == 'B')
+            {
+                banana++;
+            }
+            else if (InventoryManager.Instance.inventoryItems[i] == 'W')
+            {
+                watermelon++;
+            }
+            else if (InventoryManager.Instance.inventoryItems[i] == 'C')
+            {
+                cherry++;
+            }
+        }
+        
+        //int life = DataKeeper.Instance.lifeAmount;
+        //int banana = DataKeeper.Instance.bananaAmount;
+        //int watermelon = DataKeeper.Instance.watermelonAmount;
+        //int cherry = DataKeeper.Instance.cherryAmount;
         int enemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         bool hasKey = KeyController._instance.hasKey;
-        Debug.Log(banana);
+        //Debug.Log(banana);
         SaveGameManager.Instance().SaveGame(level, playerTransform, life, banana, watermelon, cherry, enemies, hasKey);
         DataKeeper.Instance.LoadGame(System.DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"), playerTransform);
     }

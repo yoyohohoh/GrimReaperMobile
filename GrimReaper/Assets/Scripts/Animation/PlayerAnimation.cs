@@ -20,7 +20,7 @@ public class PlayerAnimation : MonoBehaviour
 
     [SerializeField] GameObject playerModel;
     [SerializeField] GameObject playerMarker;
-
+    [SerializeField] GameObject playerSight;
 
     private void Awake()
     {
@@ -60,7 +60,6 @@ public class PlayerAnimation : MonoBehaviour
         {
             isAttacking = true;
             anim.SetBool("isAttacking", isAttacking);
-            PlayerController.Instance.Shoot();
             PlayerController.Instance.isAttacking = false;
         }
         else
@@ -99,6 +98,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Flip()
     {
+
         if (playerModel != null)
         {
             if (_move.x > 0)
@@ -107,7 +107,12 @@ public class PlayerAnimation : MonoBehaviour
                 if (playerMarker != null)
                 {
                     playerMarker.transform.rotation = Quaternion.Euler(90, 90, 0);
+
+                    playerSight.transform.position = new Vector3(playerMarker.transform.position.x, playerMarker.transform.position.y, playerMarker.transform.position.z);
+
+
                 }
+
 
             }
             else if (_move.x < 0)
@@ -116,7 +121,10 @@ public class PlayerAnimation : MonoBehaviour
                 if (playerMarker != null)
                 {
                     playerMarker.transform.rotation = Quaternion.Euler(90, -90, 0);
+                    playerSight.transform.position = new Vector3(playerMarker.transform.position.x - 2.0f, playerMarker.transform.position.y, playerMarker.transform.position.z);
+
                 }
+
             }
         }
     }

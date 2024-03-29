@@ -31,14 +31,14 @@ public class LifeController : MonoBehaviour
     {
         dataKeeper = DataKeeper.Instance;
         checkLife = GameObject.FindGameObjectsWithTag("Life").Length;
-        dataLife = dataKeeper.lifeAmount;
+        //dataLife = dataKeeper.lifeAmount;
         if(checkLife > dataLife && dataLife == 0)
         {
             life = checkLife;
         }
         else
         {
-            life = dataKeeper.lifeAmount;
+            //life = dataKeeper.lifeAmount;
         }
 
     }
