@@ -7,10 +7,21 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
+    public static MainMenuController _instance;
+    public static MainMenuController Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
     [SerializeField] GameObject menu;
     [SerializeField] GameObject options;
     [SerializeField] GameObject loadGame;
-
+    private void Awake()
+    {
+        _instance = this;
+    }
     public void Start()
     {
 

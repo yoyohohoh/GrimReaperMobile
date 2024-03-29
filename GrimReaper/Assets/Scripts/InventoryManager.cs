@@ -28,11 +28,14 @@ public class InventoryManager : MonoBehaviour
     {
         inventoryCount = 0;
         inventoryItems = new char[10];
+        Invoke("CloseInventory", 0.1f);
     }
 
-    private void Update()
+
+
+    public void CloseInventory()
     {
-        
+        Inventory.SetActive(false);
     }
 
 

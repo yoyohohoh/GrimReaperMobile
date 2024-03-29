@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadGameManager : MonoBehaviour
@@ -71,8 +72,27 @@ public class LoadGameManager : MonoBehaviour
     }
     public void Loading()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(4);
-        DataKeeper.Instance.Loading();
+        //UnityEngine.SceneManagement.SceneManager.LoadScene(4);
+        //SceneManager.LoadSceneAsync(4);
+        //DataKeeper.Instance.Loading();
+        MainMenuController.Instance.CloseMenu();
+        panel.SetActive(false);
+        Invoke("LoadGame", 1.0f);
+    }
+
+    public void LoadGame()
+    {
+        Debug.Log("Load Game");
+        var playerData = SaveGameManager.Instance().LoadGame();
+        //level
+        //int level = int.Parse(playerData.level);
+        //Debug.Log("LoadGame" + level);
+        //UnityEngine.SceneManagement.SceneManager.LoadScene(level);
+
+        //position
+        Vector3 position = JsonUtility.FromJson<Vector3>(playerData.position);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.transform.position = position;
     }
 
 }
