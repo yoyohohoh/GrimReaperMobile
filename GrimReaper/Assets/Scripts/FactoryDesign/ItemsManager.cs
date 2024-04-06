@@ -5,12 +5,18 @@ using UnityEngine;
 public class ItemsManager : MonoBehaviour
 {
     [SerializeField] public ItemsFactory _itemsFactory;
+    [SerializeField] public int itemsNumber = 10;
+    [SerializeField] public int leftX = 126;
+    [SerializeField] public int rightX = 280;
+    [SerializeField] public int leftY = 22;
+    [SerializeField] public int rightY = 52;
+
     void Start()
     {
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < itemsNumber; i++)
         {
-            int randomX = Random.Range(126, 280);
-            int randomY = Random.Range(22, 52);
+            int randomX = Random.Range(leftX, rightX);
+            int randomY = Random.Range(leftY, rightY);
             Vector3 position4 = new Vector3(randomX, -randomY, 0f);
 
             int randomItem = Random.Range(0, 3);
