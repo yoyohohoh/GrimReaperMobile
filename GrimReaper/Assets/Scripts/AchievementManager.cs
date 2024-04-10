@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class AchievementManager : MonoBehaviour
 {
-    [SerializeField] GameObject panel;
+    public static AchievementManager Instance;
+
+    [SerializeField] public GameObject panel;
+    [SerializeField] public GameObject tick1;
+    [SerializeField] public GameObject tick2;
+    [SerializeField] public GameObject tick3;
+
+    void Awake()
+    {
+        if (!Instance) Instance = this;
+    }
     void Start()
     {
         panel.SetActive(false);
+        tick1.SetActive(false);
+        tick2.SetActive(false);
+        tick3.SetActive(false);
     }
 
     public void ShowAchievementPanel()

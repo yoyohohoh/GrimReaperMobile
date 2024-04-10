@@ -8,7 +8,7 @@ using UnityEngine.UI;
 //To make sure the object contains the required components
 [RequireComponent(typeof(CharacterController))]
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Subject
 {
     public static PlayerController _instance;
     public static PlayerController Instance
@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject playerMarker;
 
     [SerializeField] private float _projectileForce = 0f;
+    [SerializeField] public Quest quest1, quest2, quest3;
 
     //[SerializeField] private float _lastHorizontalInput = 1.0f;
 
@@ -68,8 +69,12 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        quest1 = new Quest(1, "Tutorial", QuestState.Pending);
+        quest2 = new Quest(2, "CollectItem", QuestState.Pending);
+        quest3 = new Quest(3, "KillEnemy", QuestState.Pending);
+
         //player initial position
-        if(DataKeeper.Instance.save1 != new Vector3 (0f, 0f, 0f))
+        if (DataKeeper.Instance.save1 != new Vector3 (0f, 0f, 0f))
         {
             _controller.enabled = false;
             transform.position = DataKeeper.Instance.save1;
@@ -114,6 +119,8 @@ public class PlayerController : MonoBehaviour
         {
             //_lastHorizontalInput = horizontalInput;
         }
+
+        countEnemy();
     }
 
 
@@ -190,6 +197,10 @@ public class PlayerController : MonoBehaviour
             GamePlayUIController.Instance.UpdateHealth(-1.0f);
             //connect to datakeeper (stage 3)
         }
+        if(other.gameObject.CompareTag("Item"))
+        {
+            NotifyObservers(QuestState.Completed, quest2);
+        }
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
@@ -201,6 +212,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void countEnemy()
+    {
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemies.Length <= 1)
+        {
+            NotifyObservers(QuestState.Completed, quest3);
+        }
+
+    }
 
 
 }
