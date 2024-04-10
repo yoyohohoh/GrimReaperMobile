@@ -7,7 +7,7 @@ public class QuestChannel : MonoBehaviour, IObserver
 {
     public static QuestChannel Instance;
     [SerializeField] private PlayerController _playerController;
-    int questCount;
+
 
     void Awake()
     {
@@ -26,17 +26,19 @@ public class QuestChannel : MonoBehaviour, IObserver
 
     void Start()
     {
-        questCount = 0;
     }
 
     void Update()
     {
-        if(questCount >= 3)
-        {
-            Debug.Log("All Quests Completed");
-        }
-    }
 
+   
+    }
+    public void Reward()
+    {
+        Vector3 position = new Vector3(200, 20, 0);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.transform.position = position;
+    }
     public void OnNotify(QuestState state, Quest quest)
     {
         switch (state)
@@ -53,7 +55,6 @@ public class QuestChannel : MonoBehaviour, IObserver
                 break;
             case QuestState.Completed:               
                 quest.state = QuestState.Completed;
-                questCount++;
                 ChangeToCompleted(quest);
                 Debug.Log(quest.name + " is " + quest.state);
                 break;

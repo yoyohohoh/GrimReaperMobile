@@ -44,7 +44,7 @@ public class TutorialManager : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("Item") == null && GameObject.FindGameObjectWithTag("Enemy") == null)
         {
             tutorial4.SetActive(true);
-            Invoke("FinishTutorial", 2.0f);
+            Invoke("FinishTutorial", 1.0f);
         }
     }
 

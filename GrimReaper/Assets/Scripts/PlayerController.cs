@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 //To make sure the object contains the required components
@@ -146,6 +147,7 @@ public class PlayerController : Subject
         transform.position = initialPosition;
         _controller.enabled = true;
     }
+
     public void Jump() // method will be called from clicking jump button
     {
         if (_isGrounded)
@@ -207,7 +209,7 @@ public class PlayerController : Subject
             GamePlayUIController.Instance.UpdateHealth(-1.0f);
             //connect to datakeeper (stage 3)
         }
-        if(quest2.state == QuestState.Active && other.gameObject.CompareTag("Item"))
+        if(quest2.state == QuestState.Active && other.gameObject.CompareTag("Item") && UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 1)
         {
             NotifyObservers(QuestState.Completed, quest2);
         }
@@ -226,7 +228,8 @@ public class PlayerController : Subject
     {
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (quest3.state == QuestState.Active && enemies.Length <= 1)
+        
+        if (quest3.state == QuestState.Active && enemies.Length <= 1 && UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 1)
         {
             NotifyObservers(QuestState.Completed, quest3);
         }
