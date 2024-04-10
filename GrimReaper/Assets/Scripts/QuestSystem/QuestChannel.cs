@@ -80,6 +80,10 @@ public class QuestChannel : MonoBehaviour, IObserver
 
     public void ChangeToCompleted(Quest quest)
     {
+        if(quest.id == 1)
+        {
+            AchievementManager.Instance.tick1.SetActive(true);
+        }
         if(quest.id == 2)
         {
             AchievementManager.Instance.tick2.SetActive(true);
@@ -90,6 +94,12 @@ public class QuestChannel : MonoBehaviour, IObserver
         }
     }
 
+    public void TutorialScene()
+    {
+        Debug.Log("Tutorial Scene");
+        DataKeeper.Instance.isTutorialDone = true;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(5);
+    }
 
 
 

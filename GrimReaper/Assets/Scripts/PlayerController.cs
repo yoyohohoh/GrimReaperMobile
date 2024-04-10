@@ -122,6 +122,14 @@ public class PlayerController : Subject
         }
 
         countEnemy();
+
+        if(DataKeeper.Instance.isTutorialDone == true)
+        {
+            NotifyObservers(QuestState.Completed, quest1);
+            NotifyObservers(QuestState.Active, quest2);
+            NotifyObservers(QuestState.Active, quest3);
+        }
+
     }
 
 

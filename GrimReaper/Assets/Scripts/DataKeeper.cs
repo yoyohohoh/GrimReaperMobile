@@ -24,6 +24,7 @@ public class DataKeeper : MonoBehaviour
     //[Header("Life")]
     //public int lifeAmount;
     //private LifeController lifeController;
+    public bool isTutorialDone;
 
     private void Awake()
     {
@@ -36,6 +37,11 @@ public class DataKeeper : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+    }
+
+    private void Start()
+    {
+        isTutorialDone = false;
     }
 
     public void FixedUpdate()
