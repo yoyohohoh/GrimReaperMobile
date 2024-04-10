@@ -69,10 +69,11 @@ public class PlayerController : Subject
 
     void Start()
     {
-        quest1 = new Quest(1, "Tutorial", QuestState.Pending);
-        quest2 = new Quest(2, "CollectItem", QuestState.Pending);
-        quest3 = new Quest(3, "KillEnemy", QuestState.Pending);
-
+        quest1 = new Quest(1, "Tutorial", QuestState.Active);
+        quest2 = new Quest(2, "CollectItem", QuestState.Null);
+        quest3 = new Quest(3, "KillEnemy", QuestState.Null);
+        NotifyObservers(QuestState.Pending, quest2);
+        NotifyObservers(QuestState.Pending, quest3);
         //player initial position
         if (DataKeeper.Instance.save1 != new Vector3 (0f, 0f, 0f))
         {
@@ -197,7 +198,7 @@ public class PlayerController : Subject
             GamePlayUIController.Instance.UpdateHealth(-1.0f);
             //connect to datakeeper (stage 3)
         }
-        if(other.gameObject.CompareTag("Item"))
+        if(quest2.state == QuestState.Active && other.gameObject.CompareTag("Item"))
         {
             NotifyObservers(QuestState.Completed, quest2);
         }
@@ -216,7 +217,7 @@ public class PlayerController : Subject
     {
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (enemies.Length <= 1)
+        if (quest3.state == QuestState.Active && enemies.Length <= 1)
         {
             NotifyObservers(QuestState.Completed, quest3);
         }

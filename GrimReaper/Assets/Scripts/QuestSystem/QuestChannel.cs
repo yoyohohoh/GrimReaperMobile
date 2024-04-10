@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuestChannel : MonoBehaviour, IObserver
 {
@@ -21,11 +22,6 @@ public class QuestChannel : MonoBehaviour, IObserver
     {
         _playerController.RemoveObserver(this);
     }
-    void Start()
-    {
-
-
-    }
 
     void Update()
     {
@@ -37,10 +33,14 @@ public class QuestChannel : MonoBehaviour, IObserver
         switch (state)
         {
             case QuestState.Pending:
-                Debug.Log("Quest is pending");
+                quest.state = QuestState.Pending;
+                ChangeToPending(quest);
+                Debug.Log(quest.name + " is " + quest.state);
                 break;
             case QuestState.Active:
-                Debug.Log("Quest is started");
+                quest.state = QuestState.Active;
+                ChangeToActive(quest);
+                Debug.Log(quest.name + " is " + quest.state);
                 break;
             case QuestState.Completed:               
                 quest.state = QuestState.Completed;
@@ -52,6 +52,30 @@ public class QuestChannel : MonoBehaviour, IObserver
                 break;
         }
 
+    }
+
+    public void ChangeToPending(Quest quest)
+    {
+        if (quest.id == 2)
+        {
+            AchievementManager.Instance.title2.GetComponent<Text>().color = new Color(0, 0, 0, 0.20f);
+        }
+        if (quest.id == 3)
+        {
+            AchievementManager.Instance.title3.GetComponent<Text>().color = new Color(0, 0, 0, 0.20f);
+        }
+    }
+
+    public void ChangeToActive(Quest quest)
+    {
+        if (quest.id == 2)
+        {
+            AchievementManager.Instance.title2.GetComponent<Text>().color = new Color(0, 0, 0, 0.78f);
+        }
+        if (quest.id == 3)
+        {
+            AchievementManager.Instance.title3.GetComponent<Text>().color = new Color(0, 0, 0, 0.78f);
+        }
     }
 
     public void ChangeToCompleted(Quest quest)

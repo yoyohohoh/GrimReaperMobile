@@ -10,6 +10,8 @@ public class AchievementManager : MonoBehaviour
     [SerializeField] public GameObject tick1;
     [SerializeField] public GameObject tick2;
     [SerializeField] public GameObject tick3;
+    [SerializeField] public GameObject title2;
+    [SerializeField] public GameObject title3;
 
     void Awake()
     {

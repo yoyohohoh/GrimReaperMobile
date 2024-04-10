@@ -2,5 +2,6 @@ public enum QuestState
 {
     Pending,
     Active,
-    Completed
+    Completed,
+    Null
 }

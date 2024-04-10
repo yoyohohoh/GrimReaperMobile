@@ -25,6 +25,7 @@ public class InventoryController : MonoBehaviour
     [SerializeField] public Image cherry;
     [SerializeField] public int cherryCount;
     [SerializeField] public Text cherryText;
+    [SerializeField] public GameObject inventory;
 
     private void Awake()
     {
@@ -33,6 +34,7 @@ public class InventoryController : MonoBehaviour
 
     void Start()
     {
+        inventory.SetActive(true);
         //dataKeeper = DataKeeper.Instance;
         //bananaCount = dataKeeper.bananaAmount;
         //watermelonCount = dataKeeper.watermelonAmount;
