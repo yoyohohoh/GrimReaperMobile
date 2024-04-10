@@ -7,10 +7,11 @@ public class QuestChannel : MonoBehaviour, IObserver
 {
     public static QuestChannel Instance;
     [SerializeField] private PlayerController _playerController;
+    int questCount;
 
     void Awake()
     {
-        _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();       
+        _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         if (!Instance) Instance = this;
     }
 
@@ -23,9 +24,17 @@ public class QuestChannel : MonoBehaviour, IObserver
         _playerController.RemoveObserver(this);
     }
 
+    void Start()
+    {
+        questCount = 0;
+    }
+
     void Update()
     {
-
+        if(questCount >= 3)
+        {
+            Debug.Log("All Quests Completed");
+        }
     }
 
     public void OnNotify(QuestState state, Quest quest)
@@ -44,6 +53,7 @@ public class QuestChannel : MonoBehaviour, IObserver
                 break;
             case QuestState.Completed:               
                 quest.state = QuestState.Completed;
+                questCount++;
                 ChangeToCompleted(quest);
                 Debug.Log(quest.name + " is " + quest.state);
                 break;

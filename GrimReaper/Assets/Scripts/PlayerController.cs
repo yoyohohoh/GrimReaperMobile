@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 //To make sure the object contains the required components
 [RequireComponent(typeof(CharacterController))]
@@ -122,13 +123,13 @@ public class PlayerController : Subject
         }
 
         countEnemy();
-
-        if(DataKeeper.Instance.isTutorialDone == true)
+        if (DataKeeper.Instance.isTutorialDone == true)
         {
             NotifyObservers(QuestState.Completed, quest1);
             NotifyObservers(QuestState.Active, quest2);
             NotifyObservers(QuestState.Active, quest3);
         }
+
 
     }
 
