@@ -35,6 +35,7 @@ public class QuestChannel : MonoBehaviour, IObserver
     }
     public void Reward()
     {
+        SoundController.instance.Play("NewStart");
         Vector3 position = new Vector3(200, 20, 0);
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = position;
@@ -98,10 +99,12 @@ public class QuestChannel : MonoBehaviour, IObserver
         if(quest.id == 2)
         {
             AchievementManager.Instance.tick2.SetActive(true);
+            AchievementManager.Instance.ShowNoti();
         }
         if(quest.id == 3)
         {
             AchievementManager.Instance.tick3.SetActive(true);
+            AchievementManager.Instance.ShowNoti();
         }
     }
 
