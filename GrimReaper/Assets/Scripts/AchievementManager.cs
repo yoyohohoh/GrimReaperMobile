@@ -130,7 +130,7 @@ public class AchievementManager : MonoBehaviour
     public void FlashPanel()
     {
         panel.SetActive(true);
-        Invoke("ClosePanel", 0.1f);
+        Invoke("ClosePanel", 0.01f);
     }
 
     public void ClosePanel()

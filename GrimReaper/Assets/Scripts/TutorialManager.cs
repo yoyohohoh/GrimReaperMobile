@@ -19,7 +19,7 @@ public class TutorialManager : MonoBehaviour
         tutorial4.SetActive(false);
         loading.SetActive(true);
         Invoke("DisableLoading", 2.0f);
-        
+
     }
 
     void DisableLoading()
@@ -55,10 +55,11 @@ public class TutorialManager : MonoBehaviour
         // finsih tutorial
         if (GameObject.FindGameObjectWithTag("Item") == null && GameObject.FindGameObjectWithTag("Enemy") == null)
         {
-            SoundController.instance.Play("NewStart");
+            
             tutorial4.SetActive(true);
             Invoke("FinishTutorial", 4.0f);
         }
+        
     }
 
     void DisableTutorial1()

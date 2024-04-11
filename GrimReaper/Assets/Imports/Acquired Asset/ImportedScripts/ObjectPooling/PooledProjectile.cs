@@ -30,6 +30,10 @@ public class PooledProjectile : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
+            if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 5)
+            {
+                SoundController.instance.Play("NewStart");
+            }
             Destroy(other.gameObject);
         }
         else
