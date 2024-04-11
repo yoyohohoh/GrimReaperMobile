@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class QuestChannel : MonoBehaviour, IObserver
 {
     public static QuestChannel Instance;
+    bool is1stItem, is1stEnemy;
     [SerializeField] private PlayerController _playerController;
+    
+
     void Awake()
     {
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -24,6 +27,8 @@ public class QuestChannel : MonoBehaviour, IObserver
 
     void Start()
     {
+        is1stItem = false;
+        is1stEnemy = false;
     }
 
     void Update()
@@ -96,13 +101,27 @@ public class QuestChannel : MonoBehaviour, IObserver
         }
         if(quest.id == 2)
         {
+            if (!is1stItem)
+            {
+                AchievementManager.Instance.FlashPanel();
+                is1stItem = true;
+            }
             AchievementManager.Instance.tick2.SetActive(true);
+            
         }
         if(quest.id == 3)
         {
+            if (!is1stEnemy)
+            {
+                AchievementManager.Instance.FlashPanel();
+                is1stEnemy = true;
+            }
             AchievementManager.Instance.tick3.SetActive(true);
+            
         }
     }
+
+
 
     public void TutorialScene()
     {

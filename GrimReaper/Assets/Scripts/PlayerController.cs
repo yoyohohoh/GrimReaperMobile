@@ -220,10 +220,7 @@ public class PlayerController : Subject
         
         if (quest2.state == QuestState.Active && other.gameObject.CompareTag("Item") && UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 1)
         {
-
                 NotifyObservers(QuestState.Completed, quest2);
-            
-            
         }
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -241,7 +238,7 @@ public class PlayerController : Subject
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         
-        if (quest3.state == QuestState.Active && enemies.Length <= 1 && UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 1)
+        if (quest3.state == QuestState.Active && enemies.Length == 1 && UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 1)
         {
             NotifyObservers(QuestState.Completed, quest3);
         }

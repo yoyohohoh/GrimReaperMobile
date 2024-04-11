@@ -61,7 +61,14 @@ public class AchievementManager : MonoBehaviour
         {             
             reward.GetComponent<Button>().interactable = false;
         }
-        
+
+        if (GameObject.FindGameObjectsWithTag("Tick").Length > 1)
+        {
+            Debug.Log("Noti");
+            ShowNoti();
+        }
+
+
     }
 
     public void ShowAchievementPanel()
@@ -84,16 +91,30 @@ public class AchievementManager : MonoBehaviour
         
     }
 
-    public void CloseNoti()
+    public void DestroyPNoti()
     {
-        pendingNoti.SetActive(false);
-        doneNoti.SetActive(false);
+        Destroy(pendingNoti);
     }
 
-    public void ShowNoti(int count)
+    public void DestroyDNoti()
     {
-        SoundController.instance.Play("NewStart");      
-        Invoke("CloseNoti", 2.0f);
+        Destroy(doneNoti);
+    }
+
+    public void ShowNoti()
+    {
+        SoundController.instance.Play("NewStart");
+        if(GameObject.FindGameObjectsWithTag("Tick").Length == 2)
+        {
+            pendingNoti.SetActive(true);
+            Invoke("DestroyPNoti", 2.0f);
+        }
+        else if (GameObject.FindGameObjectsWithTag("Tick").Length == 3)
+        {
+            doneNoti.SetActive(true);
+            Invoke("DestroyDNoti", 2.0f);
+        }
+        
     }
     public void ShowRewardText()
     {
@@ -104,5 +125,16 @@ public class AchievementManager : MonoBehaviour
     public void HideRewardText()
     {
         rewardText.SetActive(false);
+    }
+
+    public void FlashPanel()
+    {
+        panel.SetActive(true);
+        Invoke("ClosePanel", 0.1f);
+    }
+
+    public void ClosePanel()
+    {
+        panel.SetActive(false);
     }
 }
