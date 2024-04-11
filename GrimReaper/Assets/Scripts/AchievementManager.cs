@@ -14,6 +14,7 @@ public class AchievementManager : MonoBehaviour
     [SerializeField] public GameObject title2;
     [SerializeField] public GameObject title3;
     [SerializeField] public GameObject reward;
+    [SerializeField] public GameObject rewardText;
 
     void Awake()
     {
@@ -25,6 +26,7 @@ public class AchievementManager : MonoBehaviour
         tick1.SetActive(false);
         tick2.SetActive(false);
         tick3.SetActive(false);
+        rewardText.SetActive(false);
     }
 
     private void Update()
@@ -51,5 +53,16 @@ public class AchievementManager : MonoBehaviour
         {
             panel.SetActive(false);
         }
+    }
+
+    public void ShowRewardText()
+    {
+        rewardText.SetActive(true);
+        Invoke("HideRewardText", 2.0f);
+    }
+
+    public void HideRewardText()
+    {
+        rewardText.SetActive(false);
     }
 }
