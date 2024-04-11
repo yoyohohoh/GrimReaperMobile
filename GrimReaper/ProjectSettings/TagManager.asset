@@ -13,6 +13,8 @@ TagManager:
   - Bullet
   - PlayerModel
   - Key
+  - Item
+  - Tick
   layers:
   - Default
   - TransparentFX

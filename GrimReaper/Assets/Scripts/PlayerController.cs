@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 //To make sure the object contains the required components
 [RequireComponent(typeof(CharacterController))]
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Subject
 {
     public static PlayerController _instance;
     public static PlayerController Instance
@@ -55,6 +57,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject playerMarker;
 
     [SerializeField] private float _projectileForce = 0f;
+    [SerializeField] public Quest quest1, quest2, quest3;
 
     //[SerializeField] private float _lastHorizontalInput = 1.0f;
 
@@ -68,8 +71,13 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        quest1 = new Quest(1, "Tutorial", QuestState.Active);
+        quest2 = new Quest(2, "CollectItem", QuestState.Null);
+        quest3 = new Quest(3, "KillEnemy", QuestState.Null);
+        NotifyObservers(QuestState.Pending, quest2);
+        NotifyObservers(QuestState.Pending, quest3);
         //player initial position
-        if(DataKeeper.Instance.save1 != new Vector3 (0f, 0f, 0f))
+        if (DataKeeper.Instance.save1 != new Vector3 (0f, 0f, 0f))
         {
             _controller.enabled = false;
             transform.position = DataKeeper.Instance.save1;
@@ -82,6 +90,8 @@ public class PlayerController : MonoBehaviour
         
         isjumped = false;
         isAttacking = false;
+
+
     }
 
     void FixedUpdate()
@@ -114,6 +124,16 @@ public class PlayerController : MonoBehaviour
         {
             //_lastHorizontalInput = horizontalInput;
         }
+
+        countEnemy();
+        if (DataKeeper.Instance.isTutorialDone == true)
+        {
+            NotifyObservers(QuestState.Completed, quest1);
+            NotifyObservers(QuestState.Active, quest2);
+            NotifyObservers(QuestState.Active, quest3);
+        }
+
+
     }
 
 
@@ -129,6 +149,7 @@ public class PlayerController : MonoBehaviour
         transform.position = initialPosition;
         _controller.enabled = true;
     }
+
     public void Jump() // method will be called from clicking jump button
     {
         if (_isGrounded)
@@ -148,24 +169,29 @@ public class PlayerController : MonoBehaviour
 
         //projectile pool       
         var projectile = ProjectilePoolManager.Instance.Get();
-        projectile.transform.SetPositionAndRotation(playerSight.transform.position, Quaternion.Euler(playerSight.transform.rotation.x, playerSight.transform.rotation.y + 90, playerSight.transform.rotation.z));
-        projectile.gameObject.SetActive(true);
-        //projectile.gameObject.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * _projectileForce, ForceMode.Impulse);
-
-        //if the sight is facing right, the projectile will move to the right
-
-        //projectile.gameObject.GetComponent<Rigidbody>().AddForce(-projectile.transform.forward * _projectileForce, ForceMode.Impulse);
-
-        if (_move.x >= 0)
+        if(projectile != null)
         {
-            //Debug.Log("Player Sight: " + playerSight.transform.position.x);
-            projectile.gameObject.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * _projectileForce, ForceMode.Impulse);
+            projectile.transform.SetPositionAndRotation(playerSight.transform.position, Quaternion.Euler(playerSight.transform.rotation.x, playerSight.transform.rotation.y + 90, playerSight.transform.rotation.z));
+            projectile.gameObject.SetActive(true);
+            //projectile.gameObject.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * _projectileForce, ForceMode.Impulse);
+
+            //if the sight is facing right, the projectile will move to the right
+
+            //projectile.gameObject.GetComponent<Rigidbody>().AddForce(-projectile.transform.forward * _projectileForce, ForceMode.Impulse);
+
+            if (_move.x >= 0)
+            {
+                //Debug.Log("Player Sight: " + playerSight.transform.position.x);
+                projectile.gameObject.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * _projectileForce, ForceMode.Impulse);
+            }
+            else if (_move.x < 0)
+            {
+                //Debug.Log("Player Sight: " + playerSight.transform.position.x);
+                projectile.gameObject.GetComponent<Rigidbody>().AddForce(-projectile.transform.forward * _projectileForce, ForceMode.Impulse);
+            }
         }
-        else if (_move.x < 0)
-        {
-            //Debug.Log("Player Sight: " + playerSight.transform.position.x);
-            projectile.gameObject.GetComponent<Rigidbody>().AddForce(-projectile.transform.forward * _projectileForce, ForceMode.Impulse);
-        }
+        
+        
 
 
 
@@ -190,6 +216,12 @@ public class PlayerController : MonoBehaviour
             GamePlayUIController.Instance.UpdateHealth(-1.0f);
             //connect to datakeeper (stage 3)
         }
+
+        
+        if (quest2.state == QuestState.Active && other.gameObject.CompareTag("Item") && UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 1)
+        {
+                NotifyObservers(QuestState.Completed, quest2);
+        }
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
@@ -201,6 +233,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void countEnemy()
+    {
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        
+        if (quest3.state == QuestState.Active && enemies.Length == 1 && UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            NotifyObservers(QuestState.Completed, quest3);
+        }
+
+    }
 
 
 }

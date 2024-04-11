@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 [System.Serializable]
-class PlayerData
+public class PlayerData
 {
     public string level;
     public string position;
@@ -26,16 +26,16 @@ public class SaveGameManager
     {
         return m_instance ??= new SaveGameManager();
     }
-
+    private string _filePath = Application.persistentDataPath + "/MySaveData.txt";
     public void SaveGame(int level, Transform playerTransform, int life, int banana, int watermelon, int cherry, int enemies, bool hasKey)
     {
         var binaryFormatter = new BinaryFormatter();
-        var file = File.Create(Application.persistentDataPath + "/MySaveData.txt");
+        var file = File.Create(_filePath);
 
         var data = new PlayerData
         {
             level = level.ToString(),
-            position = playerTransform.position.ToString(),
+            position = JsonUtility.ToJson(playerTransform.position),
             life = life.ToString(),
             inventoryBanana = banana.ToString(),
             inventoryWatermelon = watermelon.ToString(),
@@ -46,6 +46,17 @@ public class SaveGameManager
         binaryFormatter.Serialize(file, data);
         file.Close();
         Debug.Log("Game Data Save");
+    }
+
+    public PlayerData LoadGame()
+    {
+        if (!File.Exists(_filePath)) { return null; }
+
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file = new FileStream(_filePath, FileMode.Open);
+        PlayerData data = formatter.Deserialize(file) as PlayerData;
+        file.Close();
+        return data;
     }
 
 }
