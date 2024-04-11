@@ -39,7 +39,7 @@ public class GamePlayUIController : MonoBehaviour
         saveMsg.SetActive(false);
         //inventory.SetActive(false);
         minimap.SetActive(false);
-        Debug.Log(Application.persistentDataPath + "/MySaveData.txt");
+        //Debug.Log(Application.persistentDataPath + "/MySaveData.txt");
     }
 
     private void Update()

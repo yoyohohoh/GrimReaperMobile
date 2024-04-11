@@ -31,6 +31,7 @@ public class TutorialManager : MonoBehaviour
 
     void Update()
     {
+
         // tutorial 2
         if (loading.activeSelf == false && tutorial1.activeSelf == false && GameObject.FindGameObjectWithTag("Item") != null)
         {
@@ -53,10 +54,10 @@ public class TutorialManager : MonoBehaviour
 
         // finsih tutorial
         if (GameObject.FindGameObjectWithTag("Item") == null && GameObject.FindGameObjectWithTag("Enemy") == null)
-        {            
-            tutorial4.SetActive(true);
+        {
             SoundController.instance.Play("NewStart");
-            Invoke("FinishTutorial", 2.0f);
+            tutorial4.SetActive(true);
+            Invoke("FinishTutorial", 4.0f);
         }
     }
 

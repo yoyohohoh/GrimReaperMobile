@@ -7,8 +7,6 @@ public class QuestChannel : MonoBehaviour, IObserver
 {
     public static QuestChannel Instance;
     [SerializeField] private PlayerController _playerController;
-
-
     void Awake()
     {
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -47,17 +45,17 @@ public class QuestChannel : MonoBehaviour, IObserver
             case QuestState.Pending:
                 quest.state = QuestState.Pending;
                 ChangeToPending(quest);
-                Debug.Log(quest.name + " is " + quest.state);
+                //Debug.Log(quest.name + " is " + quest.state);
                 break;
             case QuestState.Active:
                 quest.state = QuestState.Active;
                 ChangeToActive(quest);
-                Debug.Log(quest.name + " is " + quest.state);
+                //Debug.Log(quest.name + " is " + quest.state);
                 break;
             case QuestState.Completed:               
                 quest.state = QuestState.Completed;
                 ChangeToCompleted(quest);
-                Debug.Log(quest.name + " is " + quest.state);
+                //Debug.Log(quest.name + " is " + quest.state);
                 break;
 
             default:
@@ -99,18 +97,16 @@ public class QuestChannel : MonoBehaviour, IObserver
         if(quest.id == 2)
         {
             AchievementManager.Instance.tick2.SetActive(true);
-            AchievementManager.Instance.ShowNoti();
         }
         if(quest.id == 3)
         {
             AchievementManager.Instance.tick3.SetActive(true);
-            AchievementManager.Instance.ShowNoti();
         }
     }
 
     public void TutorialScene()
     {
-        Debug.Log("Tutorial Scene");
+        //Debug.Log("Tutorial Scene");
         DataKeeper.Instance.isTutorialDone = true;
         UnityEngine.SceneManagement.SceneManager.LoadScene(5);
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,19 +34,24 @@ public class AchievementManager : MonoBehaviour
         rewardText.SetActive(false);
         pendingNoti.SetActive(false);
         doneNoti.SetActive(false);
-
+        
     }
 
     private void Update()
     {
-        if (tick1.activeSelf == false)
+        if(hint != null)
         {
-            hint.SetActive(true);
+            if (tick1.activeSelf == false)
+            {
+                hint.SetActive(true);
+            }
+            else
+            {
+                hint.SetActive(false);
+            }
         }
-        else
-        {
-            hint.SetActive(false);
-        }
+        
+
         //if tick1 is active
         if (tick1.activeSelf == true && tick2.activeSelf == true && tick3.activeSelf == true)
         {
@@ -74,7 +80,8 @@ public class AchievementManager : MonoBehaviour
     public void CloseHint()
     {
         SoundController.instance.Play("Click");
-        hint.SetActive(false);
+        Destroy(hint);
+        
     }
 
     public void CloseNoti()
@@ -83,23 +90,11 @@ public class AchievementManager : MonoBehaviour
         doneNoti.SetActive(false);
     }
 
-    public void ShowNoti()
+    public void ShowNoti(int count)
     {
-        SoundController.instance.Play("NewStart");
-        if(tick2.activeSelf == true && tick3.activeSelf == true)
-        {
-            doneNoti.SetActive(true);
-            pendingNoti.SetActive(false);
-        }
-        else
-        {
-            doneNoti.SetActive(false);
-            pendingNoti.SetActive(true);
-        }
-        
+        SoundController.instance.Play("NewStart");      
         Invoke("CloseNoti", 2.0f);
     }
-
     public void ShowRewardText()
     {
         rewardText.SetActive(true);

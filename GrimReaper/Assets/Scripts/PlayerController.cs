@@ -90,6 +90,8 @@ public class PlayerController : Subject
         
         isjumped = false;
         isAttacking = false;
+
+
     }
 
     void FixedUpdate()
@@ -167,24 +169,29 @@ public class PlayerController : Subject
 
         //projectile pool       
         var projectile = ProjectilePoolManager.Instance.Get();
-        projectile.transform.SetPositionAndRotation(playerSight.transform.position, Quaternion.Euler(playerSight.transform.rotation.x, playerSight.transform.rotation.y + 90, playerSight.transform.rotation.z));
-        projectile.gameObject.SetActive(true);
-        //projectile.gameObject.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * _projectileForce, ForceMode.Impulse);
-
-        //if the sight is facing right, the projectile will move to the right
-
-        //projectile.gameObject.GetComponent<Rigidbody>().AddForce(-projectile.transform.forward * _projectileForce, ForceMode.Impulse);
-
-        if (_move.x >= 0)
+        if(projectile != null)
         {
-            //Debug.Log("Player Sight: " + playerSight.transform.position.x);
-            projectile.gameObject.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * _projectileForce, ForceMode.Impulse);
+            projectile.transform.SetPositionAndRotation(playerSight.transform.position, Quaternion.Euler(playerSight.transform.rotation.x, playerSight.transform.rotation.y + 90, playerSight.transform.rotation.z));
+            projectile.gameObject.SetActive(true);
+            //projectile.gameObject.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * _projectileForce, ForceMode.Impulse);
+
+            //if the sight is facing right, the projectile will move to the right
+
+            //projectile.gameObject.GetComponent<Rigidbody>().AddForce(-projectile.transform.forward * _projectileForce, ForceMode.Impulse);
+
+            if (_move.x >= 0)
+            {
+                //Debug.Log("Player Sight: " + playerSight.transform.position.x);
+                projectile.gameObject.GetComponent<Rigidbody>().AddForce(projectile.transform.forward * _projectileForce, ForceMode.Impulse);
+            }
+            else if (_move.x < 0)
+            {
+                //Debug.Log("Player Sight: " + playerSight.transform.position.x);
+                projectile.gameObject.GetComponent<Rigidbody>().AddForce(-projectile.transform.forward * _projectileForce, ForceMode.Impulse);
+            }
         }
-        else if (_move.x < 0)
-        {
-            //Debug.Log("Player Sight: " + playerSight.transform.position.x);
-            projectile.gameObject.GetComponent<Rigidbody>().AddForce(-projectile.transform.forward * _projectileForce, ForceMode.Impulse);
-        }
+        
+        
 
 
 
@@ -209,9 +216,14 @@ public class PlayerController : Subject
             GamePlayUIController.Instance.UpdateHealth(-1.0f);
             //connect to datakeeper (stage 3)
         }
-        if(quest2.state == QuestState.Active && other.gameObject.CompareTag("Item") && UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 1)
+
+        
+        if (quest2.state == QuestState.Active && other.gameObject.CompareTag("Item") && UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 1)
         {
-            NotifyObservers(QuestState.Completed, quest2);
+
+                NotifyObservers(QuestState.Completed, quest2);
+            
+            
         }
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
